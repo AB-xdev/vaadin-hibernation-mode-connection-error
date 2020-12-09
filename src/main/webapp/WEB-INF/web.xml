@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<session-config>
+		<cookie-config>
+			<http-only>true</http-only>
+		</cookie-config>
+		
+		<!-- Timeout session after 12h -->
+		<session-timeout>720</session-timeout>
+	</session-config>
+
+	<servlet>
+		<servlet-name>VaadinServlet</servlet-name>
+		
+		<servlet-class>
+			com.vaadin.flow.server.VaadinServlet
+		</servlet-class>
+
+		<!-- Fix UT010026 Problems -->
+		<!-- https://stackoverflow.com/questions/9919831/whats-the-purpose-of-async-supported-in-web-xml -->
+		<async-supported>true</async-supported>
+		
+		<!-- Faster heartbeat, for faster examples -->
+		<init-param>
+			<param-name>heartbeatInterval</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>closeIdleSessions</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VaadinServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>
